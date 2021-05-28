@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import Frase from './components/Frase';
 import styled from '@emotion/styled';
 
 const Conteneder = styled.div`
@@ -21,14 +23,21 @@ const Boton = styled.button`
 
 function App() {
 
+  // State de frases
+  const [frase, guardarFrase] = useState({});
+
   const consultarAPI =  async () => {
     const api = await fetch('https://breakingbadapi.com/api/quote/random');
     const frase = await api.json();
-    console.log(frase[0]);
+    guardarFrase(frase[0]);
   }
 
   return (
     <Conteneder>
+      <Frase
+        frase={frase}
+      />
+
       <Boton
         onClick={ consultarAPI }
       >Obtener Frase</Boton>
